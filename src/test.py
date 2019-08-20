@@ -3,9 +3,9 @@ import time
 
 print('start')
 
-audio = RidderAudio('../audio/')
+audio = RidderAudio('../audio')
 
-audio.play_random_dankjewel();
+audio.play_random_dankjewel()
 
 time.sleep(10)
 
