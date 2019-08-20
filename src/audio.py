@@ -15,14 +15,20 @@ class RidderAudio:
 
   def play_random_dankjewel(self):
     f = random.choice(self.dankjewel)
-    print('playing:', f)
-    pygame.mixer.music.load(f)
-    pygame.mixer.music.play()
+
+    sound = pygame.mixer.Sound(f)
+    print('playing:', f, ' with length: ',     sound.get_length())
+    sound.play()
+    # pygame.mixer.music.load(f)
+    # pygame.mixer.music.play()
 
 
   def play_random_papierhier(self):
     f = random.choice(self.papierhier)
-    print('playing:', f)
-    pygame.mixer.music.load(f)
-    pygame.mixer.music.play()
+    sound = pygame.mixer.Sound(f)
+    print('playing:', f, ' with length: ',     sound.get_length())
+
+    sound.play()
+    # pygame.mixer.music.load(f)
+    # pygame.mixer.music.play()
 
