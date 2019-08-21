@@ -19,6 +19,7 @@ class RidderAudio:
     sound = pygame.mixer.Sound(f)
     print('playing:', f, ' with length: ',     sound.get_length())
     sound.play()
+    return sound.get_length()
     # pygame.mixer.music.load(f)
     # pygame.mixer.music.play()
 
@@ -29,6 +30,7 @@ class RidderAudio:
     print('playing:', f, ' with length: ',     sound.get_length())
 
     sound.play()
+    return sound.get_length()
     # pygame.mixer.music.load(f)
     # pygame.mixer.music.play()
 
