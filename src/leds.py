@@ -38,5 +38,5 @@ class Leds:
       self.lastBrightness = self.pixels.brightness
       self.pixels.brightness = 0
     else:
-      self.pixels.brightness = self.pixels.lastBrightness
+      self.pixels.brightness = self.lastBrightness
     self.pixels.show()
