@@ -15,5 +15,5 @@ class Leds:
 
 
   def red(self):
-    pixels.fill((255, 0, 0))
-    pixels.show()
+    self.pixels.fill((255, 0, 0))
+    self.pixels.show()

@@ -12,10 +12,10 @@ class Distance:
     # Initialize I2C bus and sensor.
     self.i2c = busio.I2C(board.SCL, board.SDA)
     if sensor == 'vl53':
-      self.sensor = adafruit_vl53l0x.VL53L0X(i2c)
+      self.sensor = adafruit_vl53l0x.VL53L0X(self.i2c)
 
     elif sensor == 'vl61':
-      self.sensor = adafruit_vl6180x.VL6180X(i2c)
+      self.sensor = adafruit_vl6180x.VL6180X(self.i2c)
 
 
     if self.sensor:
