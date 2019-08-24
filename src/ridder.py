@@ -8,10 +8,21 @@ from audio import RidderAudio
 from sensor import Distance
 from leds import Leds, RGB, WavAnimation
 
-LEDs = Leds(pin=board.D18, num_leds=4)
+## Config
 
-sensor = Distance('vl61')
-audio = RidderAudio('../audio/')
+NumLEDs = 4
+SensorType = 'vl61' # 'vl53'
+AudioDir = '../audio'
+PapierHierInterval_s = 60
+DetectThreshold_mm = 70 #20
+
+
+## Start Script
+
+LEDs = Leds(pin=board.D18, num_leds=NumLEDs)
+
+sensor = Distance(SensorType)
+audio = RidderAudio(AudioDir)
 
 start = time.time()
 detect = 0
@@ -32,7 +43,7 @@ while True:
 
   tdiff = now - start
 
-  if not detect and tdiff > 20:
+  if not detect and tdiff > PapierHierInterval_s:
     start = now
     tdiff = 0
     wav, audioLength = audio.play_random_papierhier()
@@ -48,7 +59,7 @@ while True:
       else:
         LEDs.off()
 
-  if not detect and (sensor.get() < 70):
+  if not detect and (sensor.get() < DetectThreshold_mm):
     print('detect hand!')
     detect = now
     wav, audioLength = audio.play_random_dankjewel()
