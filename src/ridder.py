@@ -9,13 +9,7 @@ from sensor import Distance
 from leds import Leds, RGB, WavAnimation
 
 ## Config
-
-NumLEDs = 4
-SensorType = 'vl61' # 'vl53'
-AudioDir = '../audio'
-PapierHierInterval_s = 60
-DetectThreshold_mm = 70 #20
-
+from config import *
 
 ## Start Script
 
