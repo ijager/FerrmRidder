@@ -13,23 +13,30 @@ class RidderAudio:
     self.dankjewel = glob.glob(audiodir + '/*dankjewel*.wav')
     print('found dankjewel files:', self.dankjewel)
 
+    self.sound = None
+
   def play_random_dankjewel(self):
+
+    if self.sound:
+        self.sound.stop()
     f = random.choice(self.dankjewel)
 
-    sound = pygame.mixer.Sound(f)
-    print('playing:', f, ' with length: ',     sound.get_length())
-    sound.play()
-    return (f, sound.get_length())
+    self.sound = pygame.mixer.Sound(f)
+    print('playing:', f, ' with length: ',     self.sound.get_length())
+    self.sound.play()
+    return (f, self.sound.get_length())
     # pygame.mixer.music.load(f)
     # pygame.mixer.music.play()
 
 
   def play_random_papierhier(self):
+    if self.sound:
+        self.sound.stop()
     f = random.choice(self.papierhier)
-    sound = pygame.mixer.Sound(f)
-    print('playing:', f, ' with length: ',     sound.get_length())
+    self.sound = pygame.mixer.Sound(f)
+    print('playing:', f, ' with length: ',     self.sound.get_length())
 
-    sound.play()
-    return (f, sound.get_length())
+    self.sound.play()
+    return (f, self.sound.get_length())
     # pygame.mixer.music.load(f)
     # pygame.mixer.music.play()
