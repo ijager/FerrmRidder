@@ -2,6 +2,7 @@
 import time
 import board
 import pickle
+import random
 
 from audio import RidderAudio
 from sensor import Distance
@@ -14,6 +15,7 @@ audio = RidderAudio('../audio/')
 
 start = time.time()
 detect = 0
+dice = 0
 audioLength = 0
 
 wavAnimation = None
@@ -35,13 +37,16 @@ while True:
     tdiff = 0
     wav, audioLength = audio.play_random_papierhier()
     wavAnimation = loadAnimation(wav, audioLength)
+    dice = random.choice(range(6))
 
   if not detect and tdiff < audioLength:
-    # LEDs.randomColor()
-    if tdiff < audioLength:
-      LEDs.applyAnimation(wavAnimation, tdiff)
+    if dice == 5:
+      LEDs.randomColor()
     else:
-      LEDs.off()
+      if tdiff < audioLength:
+        LEDs.applyAnimation(wavAnimation, tdiff)
+      else:
+        LEDs.off()
 
   if not detect and (sensor.get() < 70):
     print('detect hand!')
