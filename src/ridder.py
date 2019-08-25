@@ -6,7 +6,7 @@ import random
 
 from audio import RidderAudio
 from sensor import Distance
-from leds import Leds, RGB, WavAnimation
+from leds import Leds, RGB, WavAnimation, FadeAnimation
 
 ## Config
 from config import *
@@ -35,13 +35,6 @@ def loadAnimation(wav, audioLength):
 
 #####
 
-app = StateMachine()
-
-while True:
-  app.processState()
-  time.sleep(0.01)
-
-
 
 from enum import Enum
 
@@ -58,14 +51,17 @@ class StateMachine:
     self.state = AppState.IDLE
     self.start = time.time()
     self.stateCount = 0
-
+    self.audioLength = 0
+    self.dice = 0
     self.wavAnimation = None
+    self.ledAnimation = None
 
   def processState(self):
 
     now = time.time()
 
     state_time = now - self.start
+    nextState = self.state
 
     if self.state == AppState.IDLE:
       nextState = self.idleState(state_time)
@@ -83,15 +79,19 @@ class StateMachine:
       self.start = time.time()
       self.stateCount = 0
       LEDs.off()
+      print('transition: ', self.state , ' to ', nextState)
       self.state = nextState
 
   def idleState(self, t) -> AppState:
 
     # first entry
     if self.stateCount == 0:
-      pass
+      self.ledAnimation = FadeAnimation(
+              FadeColor,
+              FadeDuration_s)
 
     # show idle animation
+    LEDs.applyAnimation(self.ledAnimation, t)
 
     if sensor.get() < DetectThreshold_mm:
       return AppState.DETECT
@@ -99,23 +99,27 @@ class StateMachine:
     if t > PapierHierInterval_s:
       return AppState.INTERMEZZO
 
+
+
+    return AppState.IDLE
+
   def intermezzoState(self, t) -> AppState:
 
     # first entry
     if self.stateCount == 0:
-      wav, audioLength = audio.play_random_papierhier()
-      self.wavAnimation = loadAnimation(wav, audioLength)
-      dice = random.choice(range(6))
+      wav, self.audioLength = audio.play_random_papierhier()
+      self.wavAnimation = loadAnimation(wav, self.audioLength)
+      self.dice = random.choice(range(6))
 
-    if dice == 5:
+    if self.dice == 5:
       LEDs.randomColor()
     else:
-      LEDs.applyAnimation(wavAnimation, t)
+      LEDs.applyAnimation(self.wavAnimation, t)
 
     # still check for sensor event
     if sensor.get() < DetectThreshold_mm:
       return AppState.DETECT
-    elif t < audioLength:
+    elif t < self.audioLength:
       return AppState.INTERMEZZO
     else:
       return AppState.IDLE
@@ -125,17 +129,24 @@ class StateMachine:
     # first entry
     if self.stateCount == 0:
       print('detect hand!')
-      wav, audioLength = audio.play_random_dankjewel()
-      self.wavAnimation = loadAnimation(wav, audioLength)
+      wav, self.audioLength = audio.play_random_dankjewel()
+      self.wavAnimation = loadAnimation(wav, self.audioLength)
 
-    LEDs.applyAnimation(wavAnimation, t)
+    LEDs.applyAnimation(self.wavAnimation, t)
 
-    if t < audioLength:
+    if t < self.audioLength:
       return AppState.DETECT
     else:
       return AppState.IDLE
 
 
+app = StateMachine()
+
+while True:
+  app.processState()
+  time.sleep(0.01)
+
+###
 
 
 

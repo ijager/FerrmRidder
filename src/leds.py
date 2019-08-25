@@ -1,6 +1,7 @@
 import board
 import neopixel
 import random
+from math import pi, sin, cos
 from collections import namedtuple
 
 RGB = namedtuple('rgb', ['r', 'g', 'b'])
@@ -9,11 +10,44 @@ RGB = namedtuple('rgb', ['r', 'g', 'b'])
 # For RGBW NeoPixels, simply change the ORDER to RGBW or GRBW.
 ORDER = neopixel.GRB
 
+class FadeAnimation:
+
+    def __init__(self, color, duration):
+        self.A = color
+        self.duration = duration
+
+    def calcColor(self, t):
+
+        f = (t % self.duration) / self.duration
+        f = 0.5 - 0.5 * cos(2*pi*(1/self.duration)*t)
+
+        r = self.A.r * f
+        g = self.A.g * f
+        b = self.A.b * f
+        return RGB(int(r),int(g),int(b))
+
+
+#   if self.toggle == 0:
+#            # a -> b
+#            r = self.A.r + (self.B.r - self.A.r) * f
+#            g = self.A.g + (self.B.g - self.A.g) * f
+#            b = self.A.b + (self.B.b - self.A.b) * f
+#        else:
+#            # b -> a
+#            r = self.B.r + (self.A.r - self.B.r) * f
+#            g = self.B.g + (self.A.g - self.B.g) * f
+#            b = self.B.b + (self.A.b - self.B.b) * f
+#
+#        return RGB(int(r),int(g),int(b))
+
+
+
 class WavAnimation:
 
     def __init__(self, data, duration, color=None):
         self.duration = duration
         self.data = data
+        self.N = len(data)
         self.fs = len(self.data) / self.duration
         if color:
           self.color = color
@@ -25,7 +59,7 @@ class WavAnimation:
 
     def calcColor(self, t):
         i = int(self.fs * t)
-        f = self.data[i] / 255
+        f = self.data[i] / 255 if i < self.N else 0
 
         return RGB(
                 int(self.color.r * f),
