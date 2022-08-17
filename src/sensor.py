@@ -21,7 +21,7 @@ class Distance:
     if self.sensor:
 
       # set timing budget in milliseconds
-      self.sensor.measurement_timing_budget = 10000
+      self.sensor.measurement_timing_budget = 20000
 
 
   def get(self):

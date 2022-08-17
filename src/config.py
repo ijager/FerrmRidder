@@ -2,11 +2,12 @@
 
 from leds import RGB
 
-NumLEDs = 4
-SensorType = 'vl61' # 'vl53'
+NumLEDs = 8
+#SensorType = 'vl61' # 'vl53'
+SensorType = 'vl53'
 AudioDir = '/home/pi/FerrmRidder/audio'
 PapierHierInterval_s = 60
-DetectThreshold_mm = 70 #20
+DetectThreshold_mm = 200
 
-FadeColor = RGB(r=0, g=20, b=50)
+FadeColor = RGB(r=0, g=20, b=60)
 FadeDuration_s  = 3
