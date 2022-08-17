@@ -45,7 +45,6 @@ class AppState(Enum):
   DETECT = 2
   INTERMEZZO = 3
   BONUS = 4
-  
 
 
 class StateMachine:
