@@ -1,12 +1,12 @@
 [Unit]
 Description="Ferr'm Ridder Application"
+After=multi-user.target
 # we do not want to wait for onlin.target or time-sync in offline mode
 # Wants=network-online.target
 # After=network-online.target time-sync.target
 
 [Service]
-User=pi
-Group=pi
+Type=idle
 ExecStart=/usr/bin/python3 /home/pi/FerrmRidder/src/ridder.py
 Restart=always
 RestartSec=5s
