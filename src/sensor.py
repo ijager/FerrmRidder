@@ -25,4 +25,8 @@ class Distance:
 
 
   def get(self):
-    return self.sensor.range
+    try:
+      return self.sensor.range
+    except:
+      return 300
+
