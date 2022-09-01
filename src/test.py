@@ -22,6 +22,6 @@ print('got distance:', sensor.get())
 
 time.sleep(8)
 
-audio.play_random_papierhier()
+audio.play_random_intermezzo()
 
 time.sleep(8)

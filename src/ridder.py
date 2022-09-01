@@ -121,7 +121,7 @@ class StateMachine:
     if sensor.get() < DetectThreshold_mm:
       return AppState.DETECT
 
-    if t > PapierHierInterval_s:
+    if t > intermezzoInterval_s:
       return AppState.INTERMEZZO
 
     bonusDice = random.choice(range(100000))
@@ -137,7 +137,7 @@ class StateMachine:
 
     # first entry
     if self.stateCount == 0:
-      wav, self.audioLength = audio.play_random_papierhier()
+      wav, self.audioLength = audio.play_random_intermezzo()
       self.ledAnimation = loadAnimation(wav, self.audioLength)
       self.dice = random.choice(range(6))
 

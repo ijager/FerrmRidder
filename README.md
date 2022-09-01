@@ -48,5 +48,10 @@ sudo pip3 install adafruit-circuitpython-vl6180x
 Then we'll follow [this Stackexchange](https://raspberrypi.stackexchange.com/questions/80072/how-can-i-use-an-external-usb-sound-card-and-set-it-as-default) answer to enable USB audio.
 
 
+## send audio to pi
 
+```
+tar -czvf audio.tar.gz audio
+scp audio.tar.gz pi@ip:~
+```
 

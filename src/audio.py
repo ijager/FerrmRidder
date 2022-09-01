@@ -8,47 +8,50 @@ class RidderAudio:
     pygame.mixer.init()
     self.audiodir = audiodir
 
-    self.papierhier = glob.glob(audiodir + '/*papier*.wav')
-    print('found papier hier files:', self.papierhier)
+    self.fallback = glob.glob(audiodir + '/*.wav')
+    print('found fallback files:', self.fallback)
 
-    self.dankjewel = glob.glob(audiodir + '/*dankjewel*.wav')
+    self.intermezzo = glob.glob(audiodir + '/intermezzo/*.wav')
+    print('found intermezzo files:', self.intermezzo)
+
+    self.dankjewel = glob.glob(audiodir + '/thankyou/*.wav')
     print('found dankjewel files:', self.dankjewel)
 
-    self.startup = glob.glob(audiodir + '/*startup*.wav')
+    self.startup = glob.glob(audiodir + '/startup/*.wav')
     print('found startupfiles:', self.startup)
 
     self.sound = None
 
   def play_random_startup(self):
-
-    if self.sound:
-        self.sound.stop()
     f = random.choice(self.startup)
-
-    self.sound = pygame.mixer.Sound(f)
-    print('playing:', f, ' with length: ',     self.sound.get_length())
-    self.sound.play()
-    return (f, self.sound.get_length())
+    return self.play(f)
 
   def play_random_dankjewel(self):
-
-    if self.sound:
-        self.sound.stop()
     f = random.choice(self.dankjewel)
+    return self.play(f)
 
+  def play_random_intermezzo(self):
+    f = random.choice(self.intermezzo)
+    return self.play(f)
+
+  def play_fallback(self):
+    f = self.fallback[0]
     self.sound = pygame.mixer.Sound(f)
     print('playing:', f, ' with length: ',     self.sound.get_length())
+
     self.sound.play()
     return (f, self.sound.get_length())
 
-
-  def play_random_papierhier(self):
+  def play(self, f):
+    # first stop sound if one is currently playing
     if self.sound:
         self.sound.stop()
-    f = random.choice(self.papierhier)
-    self.sound = pygame.mixer.Sound(f)
-    print('playing:', f, ' with length: ',     self.sound.get_length())
 
-    self.sound.play()
-    return (f, self.sound.get_length())
+    try:
+      self.sound = pygame.mixer.Sound(f)
+      print('playing:', f, ' with length: ',     self.sound.get_length())
 
+      self.sound.play()
+      return (f, self.sound.get_length())
+    except:
+      return self.play_fallback()
