@@ -159,7 +159,7 @@ class StateMachine:
     # first entry
     if self.stateCount == 0:
       print('detect hand!')
-      wav, self.audioLength = audio.play_random_dankjewel()
+      wav, self.audioLength = audio.play_random_thankyou()
       self.ledAnimation = loadAnimation(wav, self.audioLength)
 
     LEDs.applyAnimation(self.ledAnimation, t)

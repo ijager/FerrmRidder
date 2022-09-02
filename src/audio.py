@@ -15,13 +15,13 @@ class RidderAudio:
     self.intermezzo = glob.glob(audiodir + '/intermezzo/*.wav')
     print('found intermezzo files:', self.intermezzo)
 
-    self.dankjewel = glob.glob(audiodir + '/thankyou/*.wav')
-    print('found dankjewel files:', self.dankjewel)
+    self.thankyou = glob.glob(audiodir + '/thankyou/*.wav')
+    print('found thankyou files:', self.thankyou)
 
     self.startup = glob.glob(audiodir + '/startup/*.wav')
     print('found startupfiles:', self.startup)
 
-    N = (len(self.intermezzo) + len(self.dankjewel)) // 2
+    N = (len(self.intermezzo) + len(self.thankyou)) // 2
 
     self.recently_played = deque(maxlen=N//2)
     self.sound = None
@@ -51,8 +51,8 @@ class RidderAudio:
     self.recently_played.append(f)
     return self.play(f)
 
-  def play_random_dankjewel(self):
-    return self.play_filtered_random(self.dankjewel)
+  def play_random_thankyou(self):
+    return self.play_filtered_random(self.thankyou)
 
   def play_random_intermezzo(self):
     return self.play_filtered_random(self.intermezzo)

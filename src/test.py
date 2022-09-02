@@ -16,7 +16,7 @@ leds.red()
 
 audio = RidderAudio('../audio/')
 
-audio.play_random_dankjewel()
+audio.play_random_thankyou()
 
 print('got distance:', sensor.get())
 
